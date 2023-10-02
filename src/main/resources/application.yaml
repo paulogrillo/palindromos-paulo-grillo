@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    config:
+      enable: false
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: admin
+      database: matriz-db
+      auto-index-creation: true
+    authentication-database: admin

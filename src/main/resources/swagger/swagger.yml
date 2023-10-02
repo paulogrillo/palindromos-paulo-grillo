@@ -1,0 +1,213 @@
+openapi: "3.0.1"
+
+info:
+  title: "User"
+  version: "1"
+  description: User API
+
+servers:
+  - url: http://localhost:8080/
+    description: Local server
+
+paths:
+  '/api/v1/find-palindromic':
+    post:
+      tags:
+        - Find palindromic in square matrix
+      summary: Find palindromic matriz square
+      description: Create a square matrix to find palindromic words
+      operationId: findPalindromic
+      requestBody:
+        description: Send a new matriz square
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MatrizResponse'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/WordResponse201'
+  '/api/v1/add-matrix':
+    post:
+      tags:
+        - matrix
+      summary: Create matriz square
+      description: Create a square matrix to find palindromic words
+      operationId: createMatriz
+      requestBody:
+        description: Send a new matriz square
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MatrizResponse'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/MatrizResponse201'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  '/api/v1/find-matrix':
+    get:
+      tags:
+        - matrix
+      summary: Find all matrix square
+      description: Find all square matrix in database
+      operationId: findAllMatrix
+      responses:
+        '201':
+          $ref: '#/components/responses/MatrizResponse201'
+  '/api/v1/find-words':
+    get:
+      tags:
+        - words
+      summary: Find all word list
+      description: Word list transformad
+      operationId: findAllWords
+      responses:
+        '200':
+          $ref: '#/components/responses/WordResponse200'
+  '/api/v1/add-words':
+    post:
+      tags:
+        - words
+      summary: Find all word list
+      description: Word list transformad
+      operationId: createWord
+      requestBody:
+        description: Send a new word list
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WordResponse'
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/WordResponse201'
+
+components:
+  schemas:
+    MatrizResponse:
+      type: object
+      properties:
+        matrizId:
+          type: string
+          example:
+            "f8c3de3d-1fea-4d7c-a8b0-29f63c4c3454"
+        matriz:
+          type: array
+          items:
+            type: array
+            pattern: '^[a-zA-Z]*$'
+            items:
+              type: string
+              pattern: '^[a-zA-Z]*$'
+          minItems: 2
+          maxItems: 10
+          example:
+            - ["A", "B", "C", "D", "E"]
+            - ["F", "G", "H", "I", "J"]
+            - ["K", "L", "M", "N", "O"]
+            - ["P", "Q", "R", "S", "T"]
+            - ["U", "V", "W", "X", "Y"]
+      required:
+        - matriz
+    WordResponse:
+      type: object
+      properties:
+        matrizId:
+          type: string
+          example:
+            "f8c3de3d-1fea-4d7c-a8b0-29f63c4c3454"
+        words:
+          type: array
+          items:
+            type: string
+            pattern: '^[a-zA-Z]*$'
+          example:
+            - AOOOS
+            - ROOOS
+            - TOOOS
+            - IOOOS
+            - QOOOS
+    WordResponseList:
+      type: array
+      items:
+        $ref: '#/components/schemas/WordResponse'
+
+    ResponseError:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          maxItems: 50
+          items:
+            type: object
+            additionalProperties: false
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                maxLength: 10
+                description: Error code
+                type: string
+                pattern: '[a-zA-Z0-9]*$'
+              title:
+                maxLength: 80
+                description: Error title
+                type: string
+                pattern: '[a-zA-Z0-9]*$'
+              details:
+                maxLength: 256
+                description: Error detail
+                type: string
+                pattern: '[a-zA-Z0-9]*$'
+  responses:
+    MatrizResponse201:
+      description: |-
+        **CREATED**
+        *Matriz criada com sucesso.*
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MatrizResponse'
+    MatrizResponse400:
+      description: |-
+        **CREATED**
+        *Matriz criada com sucesso.*
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MatrizResponse'
+    WordResponse200:
+      description: |-
+        **OK**
+        *Sucesso*
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WordResponseList'
+    WordResponse201:
+      description: |-
+        **OK**
+        *Criado com sucesso*
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WordResponse'
+
+    BadRequest:
+      description: |-
+        **BAD REQUEST**
+          *Request Body invalid, payload incorrect!*
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+
+
+
