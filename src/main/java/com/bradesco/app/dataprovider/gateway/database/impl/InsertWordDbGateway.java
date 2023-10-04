@@ -4,7 +4,7 @@ import com.bradesco.app.core.boundary.InsertWordBoundary;
 import com.bradesco.app.core.model.Word;
 import com.bradesco.app.dataprovider.gateway.database.entity.WordEntity;
 import com.bradesco.app.dataprovider.gateway.database.mapper.WordEntityMapper;
-import com.bradesco.app.repository.WordEntityRepository;
+import com.bradesco.app.dataprovider.gateway.database.repository.WordEntityRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

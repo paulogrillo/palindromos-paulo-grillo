@@ -3,8 +3,8 @@ package com.bradesco.app.core.usecase;
 import com.bradesco.app.core.model.Matriz;
 import com.bradesco.app.core.model.Word;
 import com.bradesco.app.core.usecase.util.FindPalindromeUtil;
+import com.bradesco.app.core.usecase.util.MatrizMapperUtil;
 import com.bradesco.app.core.usecase.util.MatrizValidateUtil;
-import com.bradesco.app.core.usecase.util.PalindromeValidateUtil;
 import com.bradesco.app.exception.ErrorCodeSupplier;
 import com.bradesco.app.exception.Exception;
 import lombok.RequiredArgsConstructor;
@@ -29,36 +29,21 @@ public class FindPalindromeUseCase {
             throw new Exception(ErrorCodeSupplier.MATRIX_002);
         }
 
-        List<List<String>> matrizStrings = matriz.getMatriz();
-        char[][] matrix = new char[matrizStrings.size()][matrizStrings.get(0).size()];
-
-        for (int i = 0; i < matrizStrings.size(); i++) {
-            List<String> row = matrizStrings.get(i);
-            for (int j = 0; j < row.size(); j++) {
-                String element = row.get(j);
-                if (element.length() != 1) {
-                    throw new Exception(ErrorCodeSupplier.MATRIX_002);
-                }
-                matrix[i][j] = element.charAt(0);
-            }
-        }
-
-            matriz.setMatrizId(UUID.randomUUID().toString());
-            Word word = Word.builder()
-                    .matrizId(matriz.getMatrizId())
-                    .build();
+        char[][] matrizArray = MatrizMapperUtil.convertMatrizListToCharacterArray(matriz.getMatriz());
+        List<String> wordsPalindromicToSave = new ArrayList<>();
 
 
-            List<String> wordsPalindromicToSave = new ArrayList<>();
+        wordsPalindromicToSave = FindPalindromeUtil.findPalindromes(matrizArray);
+        log.info("| palindromes found | x = [{}] | y = [{}] | z = [{}]",
+                wordsPalindromicToSave.get(0),
+                wordsPalindromicToSave.get(1),
+                wordsPalindromicToSave.get(2));
 
-            wordsPalindromicToSave = FindPalindromeUtil.findPalindromes(matrix);
-            word.setWords(wordsPalindromicToSave);
+        Word word = Word.builder()
+                .matrizId(UUID.randomUUID().toString())
+                .words(wordsPalindromicToSave)
+                .build();
 
-            log.info("| palindromes found | x = [{}] | y = [{}] | z = [{}]",
-                    wordsPalindromicToSave.get(0),
-                    wordsPalindromicToSave.get(1),
-                    wordsPalindromicToSave.get(2));
-
-            return addNewWordUseCase.execute(word);
+        return addNewWordUseCase.execute(word);
     }
 }

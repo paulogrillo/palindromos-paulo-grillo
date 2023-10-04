@@ -4,7 +4,7 @@ import com.bradesco.app.core.boundary.InsertMatrizBoundary;
 import com.bradesco.app.core.model.Matriz;
 import com.bradesco.app.dataprovider.gateway.database.entity.MatrizEntity;
 import com.bradesco.app.dataprovider.gateway.database.mapper.MatrizEntityMapper;
-import com.bradesco.app.repository.MatrizEntityRepository;
+import com.bradesco.app.dataprovider.gateway.database.repository.MatrizEntityRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
