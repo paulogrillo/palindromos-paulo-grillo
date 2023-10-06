@@ -3,7 +3,7 @@ package com.bradesco.app.dataprovider.gateway.database.impl;
 import com.bradesco.app.core.model.Word;
 import com.bradesco.app.dataprovider.gateway.database.entity.WordEntity;
 import com.bradesco.app.fixture.WordEntityFixture;
-import com.bradesco.app.repository.WordEntityRepository;
+import com.bradesco.app.dataprovider.gateway.database.repository.WordEntityRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

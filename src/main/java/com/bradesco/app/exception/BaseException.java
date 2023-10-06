@@ -7,8 +7,6 @@ public abstract class BaseException extends RuntimeException {
 
     protected final ErrorCodeSupplier errorCode;
 
-
-
     protected BaseException(final ErrorCodeSupplier errorCode){
         super(errorCode.getMessage());
         this.errorCode = errorCode;

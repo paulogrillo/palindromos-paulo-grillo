@@ -1,4 +1,4 @@
-package com.bradesco.app.repository;
+package com.bradesco.app.dataprovider.gateway.database.repository;
 
 import com.bradesco.app.dataprovider.gateway.database.entity.WordEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
